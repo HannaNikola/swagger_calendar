@@ -10,11 +10,11 @@ import { DiBackbone } from "react-icons/di";
 
 const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf-8"));
 
-// var options = {
-//     swaggerOptions: {
-//       url: "/api-docs/swagger.json",
-//     },
-//   };
+var options = {
+    swaggerOptions: {
+      url: "/api-docs/swagger.json",
+    },
+  };
 
 const app = express();
 
