@@ -5,15 +5,16 @@ import "dotenv/config";
 import "./db/db.js";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
+import { DiBackbone } from "react-icons/di";
 
 
 const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf-8"));
 
-var options = {
-    swaggerOptions: {
-      url: "/api-docs/swagger.json",
-    },
-  };
+// var options = {
+//     swaggerOptions: {
+//       url: "/api-docs/swagger.json",
+//     },
+//   };
 
 const app = express();
 
@@ -45,4 +46,6 @@ app.use((_, res) => {
   app.listen(PORT, () => {
     console.log(`Swagger server is running at http://localhost:${PORT}/api-docs`);
   });
+  
+
   
