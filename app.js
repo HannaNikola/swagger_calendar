@@ -5,7 +5,7 @@ import "dotenv/config";
 import "./db/db.js";
 import swaggerUi from "swagger-ui-express";
 import fs from "fs";
-import { DiBackbone } from "react-icons/di";
+
 
 
 const swaggerDocument = JSON.parse(fs.readFileSync("./swagger.json", "utf-8"));
