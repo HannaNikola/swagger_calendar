@@ -38,30 +38,36 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/NewEvent"
+                    "$ref": "#/components/schemas/Event"
                   }
                 },
                 "example": [
                   {
+                    "_id": "6628a6f2bcf42f001c26eec9",
                     "title": "Team meeting",
                     "start": "2025-04-17T10:00:00.000Z",
                     "end": "2025-04-17T11:00:00.000Z",
                     "allDay": false,
-                    "addTask": false
+                    "addTask": false,
+                    "createdAt": "2025-04-15T08:00:00.000Z",
+                    "updatedAt": "2025-04-15T08:00:00.000Z"
                   },
                   {
+                    "_id": "6628a6f2bcf42f001c26eed0",
                     "title": "Doctor Appointment",
                     "start": "2025-04-18T15:30:00.000Z",
                     "end": "2025-04-18T16:00:00.000Z",
                     "allDay": false,
-                    "addTask": true
+                    "addTask": true,
+                    "createdAt": "2025-04-16T09:00:00.000Z",
+                    "updatedAt": "2025-04-16T09:00:00.000Z"
                   }
                 ]
               }
             }
           },
-          "404": {
-            "description": "Route not found"
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -98,7 +104,10 @@
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Invalid input data"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -115,7 +124,9 @@
             "required": true,
             "description": "The ID of the event to retrieve",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "6628a6f2bcf42f001c26eec9"
             }
           }
         ],
@@ -125,13 +136,19 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NewEvent"
+                  "$ref": "#/components/schemas/Event"
                 }
               }
             }
           },
+          "400": {
+            "description": "Invalid ID format"
+          },
           "404": {
             "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -146,7 +163,9 @@
             "required": true,
             "description": "The ID of the event to update",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "6628a6f2bcf42f001c26eec9"
             }
           }
         ],
@@ -173,6 +192,12 @@
           },
           "404": {
             "description": "Event not found"
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
@@ -187,7 +212,9 @@
             "required": true,
             "description": "The ID of the event to delete",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "6628a6f2bcf42f001c26eec9"
             }
           }
         ],
@@ -208,8 +235,14 @@
               }
             }
           },
+          "400": {
+            "description": "Invalid input data"
+          },
           "404": {
             "description": "Event not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -224,12 +257,12 @@
             "description": "A list of Todo",
             "content": {
               "application/json": {
-               "schema": {
-  "type": "array",
-  "items": {
-    "$ref": "#/components/schemas/Todo" 
-  }
-},
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todo"
+                  }
+                },
                 "example": [
                   {
                     "_id": "68a3563ec408cc56ed9c8d69",
@@ -274,8 +307,8 @@
             }
           },
           "500": {
-        "description": "Internal server error"
-      }
+            "description": "Internal server error"
+          }
         }
       },
       "post": {
@@ -322,169 +355,169 @@
             "description": "Bad request"
           },
           "500": {
-      "description": "Internal server error" 
-    }
+            "description": "Internal server error"
+          }
         }
       }
     },
-   "/api/todo/{id}": {
-  "get": {
-    "tags": ["Todo"],
-    "summary": "Get one Todo by Id",
-    "description": "Returns a single Todo from the database by its ID.",
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "ID of the Todo to retrieve",
-        "schema": {
-          "type": "string",
-          "example": "689e2dcc80446af7e2a5c6bf",
-           "pattern": "^[0-9a-fA-F]{24}$"
-        }
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Successful operation - single Todo returned",
-        "content": {
-          "application/json": {
+    "/api/todo/{id}": {
+      "get": {
+        "tags": ["Todo"],
+        "summary": "Get one Todo by Id",
+        "description": "Returns a single Todo from the database by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID of the Todo to retrieve",
             "schema": {
-              "$ref": "#/components/schemas/Todo"
-            },
-            "example": {
-              "_id": "68a3563ec408cc56ed9c8d69",
-              "title": "Task",
-              "description": "Give a cat food",
-              "isImportant": true,
-              "isCompleted": false,
-              "end": "2025-08-09T14:35:00.000Z",
-              "allDay": true,
-              "eventId": "68975ca0c0053e8732e42845",
-              "repeat": "none",
-              "reminder": {
-                "triggerBefore": "30min",
-                "notifyAt": "2025-08-09T14:05:00.000Z",
-                "notified": false
-              },
-              "createdAt": "2025-08-18T16:35:10.955Z",
-              "updatedAt": "2025-08-18T18:01:23.854Z",
-              "isOverdue": true
+              "type": "string",
+              "example": "689e2dcc80446af7e2a5c6bf",
+              "pattern": "^[0-9a-fA-F]{24}$"
             }
           }
-        }
-      },
-      "404": {
-        "description": "Todo not found"
-      },
-      "500": {
-        "description": "Internal server error"
-      }
-    }
-  },
-  "patch": {
-    "tags": ["Todo"],
-    "summary": "Update an Todo by ID",
-    "description": "Partially updates an existing Todo by its ID. Only provided fields will be updated.",
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "The ID of the Todo to update",
-        "schema": {
-          "type": "string",
-  "pattern": "^[0-9a-fA-F]{24}$",
-  "example": "689e2dcc80446af7e2a5c6bf"
-        }
-      }
-    ],
-    "requestBody": {
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "$ref": "#/components/schemas/NewTodo"
-          }
-        }
-      }
-    },
-    "responses": {
-      "200": {
-        "description": "Successfully updated Todo",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Todo"
-            }
-          }
-        }
-      },
-       "400": {
-      "description": "Invalid input data" 
-    },
-      "404": {
-        "description": "Todo not found"
-      },
-      "500": {
-      "description": "Internal server error" 
-    }
-    }
-  },
-  "delete": {
-    "tags": ["Todo"],
-    "summary": "Delete an Todo by ID",
-    "description": "Deletes a specific Todo from the database using its ID.",
-    "parameters": [
-      {
-        "name": "id",
-        "in": "path",
-        "required": true,
-        "description": "The ID of the Todo to delete",
-        "schema": {
-  "type": "string",
-  "pattern": "^[0-9a-fA-F]{24}$",
-  "example": "689e2dcc80446af7e2a5c6bf"
-}
-      }
-    ],
-    "responses": {
-      "200": {
-        "description": "Todo deleted successfully",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Todo deleted successfully"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation - single Todo returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                },
+                "example": {
+                  "_id": "68a3563ec408cc56ed9c8d69",
+                  "title": "Task",
+                  "description": "Give a cat food",
+                  "isImportant": true,
+                  "isCompleted": false,
+                  "end": "2025-08-09T14:35:00.000Z",
+                  "allDay": true,
+                  "eventId": "68975ca0c0053e8732e42845",
+                  "repeat": "none",
+                  "reminder": {
+                    "triggerBefore": "30min",
+                    "notifyAt": "2025-08-09T14:05:00.000Z",
+                    "notified": false
+                  },
+                  "createdAt": "2025-08-18T16:35:10.955Z",
+                  "updatedAt": "2025-08-18T18:01:23.854Z",
+                  "isOverdue": true
                 }
               }
             }
+          },
+          "404": {
+            "description": "Todo not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       },
-      "404": {
-        "description": "Todo not found"
+      "patch": {
+        "tags": ["Todo"],
+        "summary": "Update an Todo by ID",
+        "description": "Partially updates an existing Todo by its ID. Only provided fields will be updated.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the Todo to update",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "689e2dcc80446af7e2a5c6bf"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewTodo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated Todo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Todo"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Todo not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
       },
-      "500": {
-  "description": "Internal server error"
-}
+      "delete": {
+        "tags": ["Todo"],
+        "summary": "Delete an Todo by ID",
+        "description": "Deletes a specific Todo from the database using its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the Todo to delete",
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-fA-F]{24}$",
+              "example": "689e2dcc80446af7e2a5c6bf"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Todo deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID format"
+          },
+          "404": {
+            "description": "Todo not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
-  }
-}
   },
   "components": {
     "schemas": {
       "NewEvent": {
         "type": "object",
+        "required": ["title"],
         "properties": {
-          "_id": {
-            "type": "string",
-            "example": "6628a6f2bcf42f001c26eec9"
-          },
           "title": {
             "type": "string",
             "example": "Meeting with team"
@@ -509,7 +542,38 @@
           }
         }
       },
-     "NewTodo": {
+      "Event": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/NewEvent"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{24}$",
+                "example": "6628a6f2bcf42f001c26eec9",
+                "readOnly": true
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-08-18T16:35:10.955Z",
+                "readOnly": true
+              },
+              "updatedAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2025-08-18T18:01:23.854Z",
+                "readOnly": true
+              }
+            },
+            "required": ["_id", "createdAt", "updatedAt"]
+          }
+        ]
+      },
+      "NewTodo": {
         "type": "object",
         "required": ["title", "eventId", "end"],
         "properties": {
@@ -587,11 +651,11 @@
             "type": "object",
             "properties": {
               "_id": {
-          "type": "string",
-          "pattern": "^[0-9a-fA-F]{24}$",
-          "example": "68a3563ec408cc56ed9c8d69",
-          "readOnly": true
-        },
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]{24}$",
+                "example": "68a3563ec408cc56ed9c8d69",
+                "readOnly": true
+              },
               "createdAt": {
                 "type": "string",
                 "format": "date-time",
