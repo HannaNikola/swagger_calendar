@@ -510,7 +510,35 @@
           }
         }
       }
+     
+  },
+   "/api/todo/overdue": {
+      "get": {
+        "tags": ["Todos"],
+        "summary": "Get overdue todos",
+        "description": "Returns a list of all todos that are past their due date",
+        "responses": {
+          "200": {
+            "description": "List of overdue todos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Todos"
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
+  
   },
   "components": {
     "schemas": {
