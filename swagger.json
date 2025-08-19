@@ -38,7 +38,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Event"
+                    "$ref": "#/components/schemas/Events"
                   }
                 },
                 "example": [
@@ -98,7 +98,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "$ref": "#/components/schemas/Events"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "$ref": "#/components/schemas/Events"
                 }
               }
             }
@@ -185,7 +185,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Event"
+                  "$ref": "#/components/schemas/Events"
                 }
               }
             }
@@ -542,7 +542,7 @@
           }
         }
       },
-      "Event": {
+      "Events": {
         "allOf": [
           {
             "$ref": "#/components/schemas/NewEvent"
