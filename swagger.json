@@ -417,7 +417,7 @@
         }
       },
       "patch": {
-        "tags": ["Todo"],
+        "tags": ["Todos"],
         "summary": "Update an Todo by ID",
         "description": "Partially updates an existing Todo by its ID. Only provided fields will be updated.",
         "parameters": [
@@ -449,7 +449,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "$ref": "#/components/schemas/Todos"
                 }
               }
             }
