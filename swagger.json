@@ -249,7 +249,7 @@
     },
     "/api/todo/": {
       "get": {
-        "tags": ["Todo"],
+        "tags": ["Todos"],
         "summary": "Get all Todo",
         "description": "Returns the full collection of Todo from the database.",
         "responses": {
@@ -260,7 +260,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Todo"
+                    "$ref": "#/components/schemas/Todos"
                   }
                 },
                 "example": [
@@ -312,7 +312,7 @@
         }
       },
       "post": {
-        "tags": ["Todo"],
+        "tags": ["Todos"],
         "summary": "Create a new Todo",
         "description": "Adds a new Todo to the database.",
         "requestBody": {
@@ -346,7 +346,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "$ref": "#/components/schemas/Todos"
                 }
               }
             }
@@ -362,7 +362,7 @@
     },
     "/api/todo/{id}": {
       "get": {
-        "tags": ["Todo"],
+        "tags": ["Todos"],
         "summary": "Get one Todo by Id",
         "description": "Returns a single Todo from the database by its ID.",
         "parameters": [
@@ -384,7 +384,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Todo"
+                  "$ref": "#/components/schemas/Todos"
                 },
                 "example": {
                   "_id": "68a3563ec408cc56ed9c8d69",
@@ -466,7 +466,7 @@
         }
       },
       "delete": {
-        "tags": ["Todo"],
+        "tags": ["Todos"],
         "summary": "Delete an Todo by ID",
         "description": "Deletes a specific Todo from the database using its ID.",
         "parameters": [
@@ -642,7 +642,7 @@
           }
         }
       },
-      "Todo": {
+      "Todos": {
         "allOf": [
           {
             "$ref": "#/components/schemas/NewTodo"
